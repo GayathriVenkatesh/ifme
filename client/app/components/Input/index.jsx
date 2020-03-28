@@ -81,7 +81,7 @@ const Input = ({
         min={min}
         max={max}
         autoComplete={autoComplete}
-        hasError={(errorPresent: boolean) => hasError(errorPresent, typeOfError)}
+        hasError={(errorPresent: boolean, typeOfError?: string) => hasError(errorPresent, typeOfError)}
         myRef={myRef}
         label={label}
         copyOnClick={copyOnClick}
@@ -115,7 +115,7 @@ const Input = ({
         id={id}
         name={name}
         required={required}
-        hasError={(errorPresent: boolean) => hasError(errorPresent, typeOfError)}
+        hasError={(errorPresent: boolean, typeOfError?: string) => hasError(errorPresent, typeOfError)}
         myRef={myRef}
         dark={dark}
       />
@@ -146,7 +146,7 @@ const Input = ({
         <InputCheckboxGroup
           checkboxes={checkboxes}
           required={required}
-          hasError={(errorPresent: boolean) => hasError(errorPresent, typeOfError)}
+          hasError={(errorPresent: boolean, typeOfError?: string) => hasError(errorPresent, typeOfError)}
         />
       );
     }

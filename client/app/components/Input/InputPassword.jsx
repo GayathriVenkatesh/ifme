@@ -25,12 +25,10 @@ const onFocus = (required: ?boolean, hasError: ?Function) => {
   }
 };
 
-
 const onBlur = (
   e: SyntheticEvent<HTMLInputElement>,
   required: ?boolean,
   hasError: ?Function,
-  id: string,
 ) => {
   const { value } = e.currentTarget;
    if (required && e.currentTarget.value == '') {
@@ -76,7 +74,7 @@ export function InputPassword({
         autoComplete="off"
         className={inputCss.password}
         onFocus={() => onFocus(required, hasError)}
-        onBlur={(e: SyntheticEvent<HTMLInputElement>) => onBlur(e, required, hasError, id)}
+        onBlur={(e: SyntheticEvent<HTMLInputElement>) => onBlur(e, required, hasError)}
       />
       <button
         type="button"

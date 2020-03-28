@@ -7,7 +7,7 @@ module PasswordValidator
   PASSWORD_VALIDITY_MONTHS = 12
 
   def password_needs_update?
-    return false if google_oauth2_enabled?
+    return false if (google_oauth2_enabled? || facebook_oauth2_enabled?)
 
     no_histories? || outdated_password?
   end
@@ -36,22 +36,13 @@ module PasswordValidator
   end
 
   def password_complexity
-    google_oauth2_enabled? ||
+    google_oauth2_enabled? || facebook_oauth2_enabled?
       password.blank? ||
       (!saved_change_to_encrypted_password? && strong_password?)
   end
 
   def strong_password?
-    matches_format? && not_a_used_password?
-  end
-
-  def matches_format?
-    password_regex =
-      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).*$/
-    return true if password.match?(password_regex)
-
-    errors.add(:password, I18n.t('devise.registrations.password_errors.format'))
-    false
+     not_a_used_password?
   end
 
   def not_a_used_password?

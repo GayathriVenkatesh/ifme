@@ -25,14 +25,28 @@ const onFocus = (required: ?boolean, hasError: ?Function) => {
   }
 };
 
+
 const onBlur = (
   e: SyntheticEvent<HTMLInputElement>,
   required: ?boolean,
   hasError: ?Function,
+  id: string,
 ) => {
   const { value } = e.currentTarget;
-  if (required && hasError) {
-    hasError(!value);
+   if (required && e.currentTarget.value == '') {
+    hasError(!value, "empty");
+    return;
+  }
+
+  const password_regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).*$/;
+
+  if (e.currentTarget.id == "user_password" || e.currentTarget.id == "user_password_confirmation") {
+    if (e.currentTarget.value.length>=8 && password_regex.test(e.currentTarget.value)) {
+      hasError(false);
+    }
+    else{
+      hasError(true, "password");
+    }
   }
 };
 
@@ -62,7 +76,7 @@ export function InputPassword({
         autoComplete="off"
         className={inputCss.password}
         onFocus={() => onFocus(required, hasError)}
-        onBlur={(e: SyntheticEvent<HTMLInputElement>) => onBlur(e, required, hasError)}
+        onBlur={(e: SyntheticEvent<HTMLInputElement>) => onBlur(e, required, hasError, id)}
       />
       <button
         type="button"

@@ -50,15 +50,18 @@ const Input = ({
   onChange,
   onError,
   copyOnClick,
+  typeOfError: defaultTypeOfError,
   error: defaultError,
 }: Props) => {
   const [error, setError] = useState<boolean>(!!defaultError);
+  const [typeOfError, setTypeOfError] = useState<string>(typeOfError);
 
-  const hasError = (errorPresent: boolean) => {
+  const hasError = (errorPresent: boolean, typeOfError?: string) => {
     if (onError) {
       onError(id, errorPresent);
     }
     setError(errorPresent);
+    setTypeOfError(typeOfError);
   };
 
   const displayDefault = () => {
@@ -78,7 +81,7 @@ const Input = ({
         min={min}
         max={max}
         autoComplete={autoComplete}
-        hasError={(errorPresent: boolean) => hasError(errorPresent)}
+        hasError={(errorPresent: boolean) => hasError(errorPresent, typeOfError)}
         myRef={myRef}
         label={label}
         copyOnClick={copyOnClick}
@@ -112,7 +115,7 @@ const Input = ({
         id={id}
         name={name}
         required={required}
-        hasError={(errorPresent: boolean) => hasError(errorPresent)}
+        hasError={(errorPresent: boolean) => hasError(errorPresent, typeOfError)}
         myRef={myRef}
         dark={dark}
       />
@@ -143,7 +146,7 @@ const Input = ({
         <InputCheckboxGroup
           checkboxes={checkboxes}
           required={required}
-          hasError={(errorPresent: boolean) => hasError(errorPresent)}
+          hasError={(errorPresent: boolean) => hasError(errorPresent, typeOfError)}
         />
       );
     }
@@ -236,7 +239,7 @@ const Input = ({
           placeholder={placeholder}
           required={required}
           label={label}
-          hasError={(errorPresent: boolean) => hasError(errorPresent)}
+          hasError={(errorPresent: boolean, typeOfError?: string) => hasError(errorPresent, typeOfError)}
         />
       );
     }
@@ -245,7 +248,7 @@ const Input = ({
 
   const displayError = () => {
     if (error) {
-      return <InputError error={error} />;
+      return <InputError error={error} typeOfError={typeOfError} />;
     }
     return null;
   };
@@ -321,6 +324,7 @@ export default ({
   onClick,
   onChange,
   onError,
+  typeOfError,
   copyOnClick,
   error,
 }: Props) => (
@@ -355,6 +359,7 @@ export default ({
     onClick={onClick}
     onChange={onChange}
     onError={onError}
+    typeOfError={typeOfError}
     copyOnClick={copyOnClick}
     error={error}
   />
